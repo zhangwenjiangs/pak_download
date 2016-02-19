@@ -1,0 +1,12 @@
+:revision: 14.1.2
+:repository:
+    :host: jcdev.e3.mid.mt.nec.co.jp
+:platform:
+    :basedir:
+        :win: /jenkins/view/2.DAILY/view/JCDB-14.1.x/job/MGWIN_build_R14.1.x/lastSuccessfulBuild/artifact/mgwin                 # 14.1.x
+        :linux: /jenkins/view/2.DAILY/view/JCDB-14.1.x/job/MGUNIX_build_R14.1.x/label=linux/lastStableBuild/artifact/bz2       # 14.1.x
+        :clwin: /jenkins/view/2.DAILY/view/JCDB-14.1.x/job/CLWIN_build_R14.1.x/lastSuccessfulBuild/artifact/clwin
+
+
+#       :win: /jenkins/view/2.DAILY/view/JCDB-14.2.x/job/MGWIN_build_R14.2.x/lastSuccessfulBuild/artifact/mgwin                 # 14.2.x
+#       :linux: /jenkins/view/2.DAILY/view/JCDB-14.2.x/job/MGUNIX_build_R14.2.x/label=linux/lastSuccessfulBuild/artifact/bz2    # 14.2.x
