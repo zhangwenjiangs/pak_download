@@ -145,8 +145,10 @@ class PkgMgr
 
   def update
     get_path()
-
     begin
+      ftp = Net::FTP.new('172.28.93.70')
+      ftp.passive = true
+      ftp.login
       i = 0
       $pak_count.times do
         case i
@@ -167,31 +169,30 @@ class PkgMgr
           if FileDigest.equal?(remote_path, old_local_path)
              # MD5 equal?
              puts "Copying #{$pak_name[i]} ..."
-             FileUtils.mv(old_local_path,@totle_path)
+             ftp.getbinaryfile("/test/R#{@version_num_input}/#{@old_lastfile_name}/#{$pak_name[i]}",local_path)
+             ftp.delete("/test/R#{@version_num_input}/#{@old_lastfile_name}/#{$pak_name[i]}")
+             ftp.putbinaryfile(local_path,"/test/R#{@version_num_input}/#{@new_lastfile_name}/#{$pak_name[i]}")
              puts "Copyed successfully!"
              i += 1
              next
           end
+          ftp.delete("/test/R#{@version_num_input}/#{@old_lastfile_name}/#{$pak_name[i]}")
         end
         g = download(remote_path,local_path)
-
-        ftp = Net::FTP.new('172.28.93.70')
-        ftp.passive = true
-        ftp.login
         ftp.putbinaryfile(local_path,"/test/R#{@version_num_input}/#{@new_lastfile_name}/#{$pak_name[i]}")
-        ftp.close
         i += 1
       end
-
-      rescue => exc
-        puts exc
-        return false
-      end
+    rescue => exc
+      puts exc
+      return false
+    ensure
       if @old_lastfile_name
-         FileUtils.rm_r("#{@base_path}/#{@old_lastfile_name}")
+         ftp.rmdir("/test/R#{@version_num_input}/#{@old_lastfile_name}")
          puts "old file path remove successfully."
       end
-      return true
+      ftp.close
+    end
+    return true
   end
 end
 
